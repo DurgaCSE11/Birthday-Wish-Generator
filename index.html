@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Happy Birthday! ✨👑 | Universal Celebration App</title>
+    <meta name="description" content="A magical, interactive, and customizable birthday celebration web application with 3D cake, particle effects, and live link sharing.">
+    <!-- Google Fonts for Modern Premium Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti Library for Celebrations -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Particle Canvas -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Floating Action Controls (Top Right & Bottom Right) -->
+    <div class="sound-control-container">
+        <button id="sound-toggle-btn" class="sound-btn" aria-label="Toggle Sound Effects">
+            <span class="sound-icon">🔔</span>
+            <span class="sound-text">Sound: ON</span>
+        </button>
+    </div>
+
+    <!-- Floating Fixed Personalize Button for Mobile & Quick Access -->
+    <button id="float-customizer-btn" class="float-customizer-btn" aria-label="Personalize Link">
+        <span>✨ Personalize & Share Link 🎁</span>
+    </button>
+
+    <!-- ==============================================
+         1. WELCOME SURPRISE GATEWAY (#welcome-screen)
+         ============================================== -->
+    <section id="welcome-screen" class="welcome-screen active">
+        <div class="glass-gateway-card">
+            <div class="glow-ring"></div>
+            <div class="gift-icon-container">
+                <span class="floating-gift">🎁</span>
+                <div class="sparkle-dots">
+                    <span>✨</span><span>💫</span><span>🌟</span>
+                </div>
+            </div>
+            <h1 class="gateway-title" id="gateway-title-text">A Special Surprise Awaits...</h1>
+            <p class="gateway-subtitle">A magical, interactive birthday celebration crafted exclusively for <strong class="highlight-name" id="gateway-recipient">Special One</strong> <span id="gateway-sender-wrapper">from <strong class="highlight-name" id="gateway-sender">Someone Special</strong></span> ✨</p>
+            <button id="unlock-btn" class="cta-button primary-glow-btn crazy-pulse-btn">
+                <span>💥 UNLOCK CRAZY BIRTHDAY SURPRISE 💥</span>
+                <div class="btn-shimmer"></div>
+            </button>
+            <div class="gateway-customize-hint">
+                <button id="gateway-open-customizer" class="hint-btn">🎨 Create your own wish link for a friend instantly!</button>
+            </div>
+        </div>
+        <div id="crazy-overlay" class="crazy-overlay hidden">
+            <div class="crazy-flash"></div>
+            <div class="floating-crazy-emojis" id="crazy-emojis-container"></div>
+        </div>
+    </section>
+
+    <!-- ==============================================
+         2. MAIN CELEBRATION CONTENT (#main-content)
+         ============================================== -->
+    <main id="main-content" class="main-content hidden">
+        
+        <!-- Top Navigation Bar -->
+        <header class="top-nav">
+            <div class="nav-brand" id="nav-brand-title">👑 <span id="nav-recipient-name">Happy Birthday</span>!</div>
+            <nav class="nav-links">
+                <a href="#hero-message" class="nav-item">Greeting</a>
+                <a href="#cake-section" class="nav-item">Make a Wish</a>
+                <button id="open-customizer-btn" class="nav-customizer-btn">✨ Create Magic Link</button>
+            </nav>
+            <button id="confetti-shower-btn" class="nav-confetti-btn" title="Shower more confetti!">🎉 Confetti Burst</button>
+        </header>
+
+        <!-- Hero Greeting Section -->
+        <section id="hero-message" class="section hero-section">
+            <div class="floating-elements-container">
+                <div class="floating-balloon balloon-1">🎈</div>
+                <div class="floating-balloon balloon-2">💖</div>
+                <div class="floating-balloon balloon-3">👑</div>
+                <div class="floating-balloon balloon-4">✨</div>
+            </div>
+            
+            <div class="hero-card glass-panel">
+                <div class="badge-tag" id="hero-badge-date">🎉 Celebrating Someone Extraordinary</div>
+                <h1 class="main-birthday-title">Happy Birthday,<br><span class="gradient-text" id="hero-title-to">Special One!</span> 🎂✨</h1>
+                <p class="hero-lead" id="hero-lead-text">To a truly wonderful person whose positive energy and radiant smile brighten every single room they walk into.</p>
+                
+                <div class="heartfelt-message-box">
+                    <p class="message-text" id="hero-message-body">
+                        "On your special day, I wanted to send you my very warmest birthday wishes! Your kindness, your contagious laugh, and your genuine heart make the world such a brighter place. May this new year of your life bring you exciting new adventures, endless happiness, and every dream your heart desires!"
+                    </p>
+                    <div class="message-signature" id="hero-signature-from">✨ With Warmest & Best Birthday Wishes ✨</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Birthday Cake & Candle Blowing Section -->
+        <section id="cake-section" class="section cake-section">
+            <div class="section-header">
+                <span class="section-badge">Interactive Experience</span>
+                <h2 class="section-title">Make a Wish, <span class="gradient-text" id="cake-title-to">Special One</span>! 🕯️✨</h2>
+                <p class="section-description">Close your eyes, make your dearest wish for the year ahead, and tap the button below to blow out your birthday candles!</p>
+            </div>
+
+            <div class="cake-container glass-panel">
+                <div class="cake-stage">
+                    <div class="birthday-cake">
+                        <!-- Top Candles Layer -->
+                        <div class="candles-holder">
+                            <div class="candle" data-index="1">
+                                <div class="flame"></div>
+                                <div class="flame-glow"></div>
+                                <div class="smoke"></div>
+                                <div class="wax"></div>
+                            </div>
+                            <div class="candle center-candle" data-index="2">
+                                <div class="flame"></div>
+                                <div class="flame-glow"></div>
+                                <div class="smoke"></div>
+                                <div class="wax"></div>
+                            </div>
+                            <div class="candle" data-index="3">
+                                <div class="flame"></div>
+                                <div class="flame-glow"></div>
+                                <div class="smoke"></div>
+                                <div class="wax"></div>
+                            </div>
+                            <div class="candle" data-index="4">
+                                <div class="flame"></div>
+                                <div class="flame-glow"></div>
+                                <div class="smoke"></div>
+                                <div class="wax"></div>
+                            </div>
+                            <div class="candle" data-index="5">
+                                <div class="flame"></div>
+                                <div class="flame-glow"></div>
+                                <div class="smoke"></div>
+                                <div class="wax"></div>
+                            </div>
+                        </div>
+
+                        <!-- Cake Tiers -->
+                        <div class="cake-tier tier-top">
+                            <div class="icing-drips">
+                                <span class="drip"></span><span class="drip"></span><span class="drip"></span><span class="drip"></span><span class="drip"></span><span class="drip"></span>
+                            </div>
+                            <div class="sprinkles">
+                                <i class="sprinkle s1"></i><i class="sprinkle s2"></i><i class="sprinkle s3"></i><i class="sprinkle s4"></i>
+                            </div>
+                        </div>
+                        <div class="cake-tier tier-middle">
+                            <div class="icing-drips">
+                                <span class="drip"></span><span class="drip"></span><span class="drip"></span><span class="drip"></span><span class="drip"></span><span class="drip"></span><span class="drip"></span>
+                            </div>
+                            <div class="cake-ribbon" id="cake-ribbon-text">👑 HAPPY BIRTHDAY 👑</div>
+                        </div>
+                        <div class="cake-tier tier-bottom">
+                            <div class="icing-drips">
+                                <span class="drip"></span><span class="drip"></span><span class="drip"></span><span class="drip"></span><span class="drip"></span><span class="drip"></span><span class="drip"></span><span class="drip"></span>
+                            </div>
+                            <div class="sprinkles">
+                                <i class="sprinkle s5"></i><i class="sprinkle s6"></i><i class="sprinkle s7"></i><i class="sprinkle s8"></i>
+                            </div>
+                        </div>
+                        <div class="cake-stand"></div>
+                    </div>
+                </div>
+
+                <div class="cake-controls">
+                    <button id="blow-candles-btn" class="cta-button blow-btn">
+                        <span>Blow Out The Candles! 💨🎂</span>
+                        <div class="btn-shimmer"></div>
+                    </button>
+                    <button id="relight-candles-btn" class="secondary-btn hidden">
+                        <span>Light Candles Again 🔥</span>
+                    </button>
+                </div>
+
+                <!-- Secret Message Reveal Box (Hidden until blown) -->
+                <div id="secret-message-box" class="secret-message-box hidden">
+                    <div class="secret-glow"></div>
+                    <div class="secret-content">
+                        <div class="secret-header">
+                            <span class="secret-icon">💌</span>
+                            <h3>Your Wish Has Been Sealed in the Stars!</h3>
+                        </div>
+                        <p class="secret-body" id="secret-body-text">
+                            "As the candle smoke rises, your wish takes flight! Never forget that your resilience, humor, and pure heart inspire everyone around you. Keep shining as brightly as you do every day. This year is yours to conquer!"
+                        </p>
+                        <div class="secret-footer" id="secret-signature-from">✨ Wishing you endless joy, smiles & success ✨</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="footer-content">
+                <p>Designed with ❤️ by <strong class="gradient-text">Durga</strong> • An Open-Source Universal Celebration Experience</p>
+                <p class="footer-sub">Share the joy and make someone's birthday unforgettable!</p>
+                <div class="footer-showcase-actions">
+                    <button id="footer-customizer-btn" class="footer-btn">✨ Personalize For Your Friend</button>
+                    <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="footer-social-link">🔗 Share on LinkedIn</a>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- ==============================================
+         3. INTERACTIVE PERSONALIZATION & LINK MODAL
+         ============================================== -->
+    <div id="customizer-modal" class="customizer-modal hidden">
+        <div class="modal-backdrop" id="modal-backdrop"></div>
+        <div class="modal-card glass-panel">
+            <button class="modal-close-btn" id="modal-close-btn" aria-label="Close modal">&times;</button>
+            <div class="modal-header">
+                <span class="modal-badge">✨ Interactive Wish Generator</span>
+                <h2>Personalize & Share Magic Link 🎁</h2>
+                <p>Create a customized celebration experience for anyone in seconds. Generate your unique link and send it via WhatsApp, LinkedIn, or Email!</p>
+            </div>
+
+            <div class="modal-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="modal-input-to">Recipient's Name (To) 👑</label>
+                        <input type="text" id="modal-input-to" placeholder="e.g. Sophia, Alex, Priti..." autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="modal-input-from">Your Name (From) ❤️</label>
+                        <input type="text" id="modal-input-from" placeholder="e.g. Jordan, Durga..." autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="modal-select-preset">Relationship / Tone Preset 💬</label>
+                    <select id="modal-select-preset" class="preset-selector">
+                        <option value="friendly">Warm & Friendly ✨ (Perfect for new friends & colleagues)</option>
+                        <option value="bestie">Best Friends Forever 🚀 (Fun, playful & heartfelt)</option>
+                        <option value="romantic">Sweet & Romantic ❤️ (Deeply touching & loving)</option>
+                        <option value="party">Fun & Celebratory 🎉 (High-energy hype party vibe)</option>
+                        <option value="custom">✍️ Write Your Own Custom Message</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="custom-msg-group">
+                    <label for="modal-input-msg">Birthday Message / Wish 💌</label>
+                    <textarea id="modal-input-msg" rows="4" placeholder="Type your heartfelt birthday wishes here..."></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button id="preview-live-btn" class="secondary-btn">
+                        <span>👁️ Live Preview Now</span>
+                    </button>
+                    <button id="generate-link-btn" class="cta-button primary-glow-btn">
+                        <span>🚀 Copy Magic Link</span>
+                        <div class="btn-shimmer"></div>
+                    </button>
+                </div>
+
+                <div class="social-share-bar">
+                    <button id="whatsapp-share-btn" class="share-btn whatsapp-btn">📱 Share via WhatsApp</button>
+                    <button id="linkedin-share-btn" class="share-btn linkedin-btn">💼 Post on LinkedIn</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification for Copy Alert -->
+    <div id="copy-toast" class="copy-toast hidden">
+        <span class="toast-icon">✅</span>
+        <span class="toast-text" id="toast-message">Magic Link Copied to Clipboard! 🎉</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
